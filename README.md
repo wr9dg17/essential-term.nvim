@@ -6,11 +6,11 @@ A lightweight Neovim terminal plugin with multiple named sessions, two display m
 
 ### Horizontal mode
 
-<video src="assets/horizontal.mov" controls width="100%"></video>
+![Horizontal mode demo](./assets/horizontal.gif)
 
 ### Float mode
 
-<video src="assets/float.mov" controls width="100%"></video>
+![Float mode demo](./assets/float.gif)
 
 ## Features
 
