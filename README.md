@@ -26,6 +26,7 @@ A lightweight Neovim terminal plugin with multiple named sessions, two display m
 ## Requirements
 
 - Neovim >= 0.9
+- [nui.nvim](https://github.com/MunifTanjim/nui.nvim)
 
 ## Installation
 
@@ -35,6 +36,7 @@ A lightweight Neovim terminal plugin with multiple named sessions, two display m
 {
   "wr9dg17/essential-term.nvim",
   lazy = false,
+  dependencies = { "MunifTanjim/nui.nvim" },
   config = function()
     require("essential-term").setup({
       display_mode = "horizontal", -- or "float"
