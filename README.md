@@ -6,7 +6,11 @@ A lightweight Neovim terminal plugin with multiple named sessions, two display m
 
 ### Horizontal mode
 
+<video src="assets/horizontal.mov" controls width="100%"></video>
+
 ### Float mode
+
+<video src="assets/float.mov" controls width="100%"></video>
 
 ## Features
 
@@ -52,7 +56,7 @@ A lightweight Neovim terminal plugin with multiple named sessions, two display m
 
 ```lua
 use {
-  "yourusername/essential-term.nvim",
+  "wr9dg17/essential-term.nvim",
   config = function()
     require("essential-term").setup()
   end,
