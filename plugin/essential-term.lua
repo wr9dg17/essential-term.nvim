@@ -38,6 +38,16 @@ vim.api.nvim_create_autocmd("BufEnter", {
   end,
 })
 
+-- Reload file buffers when leaving a terminal so external changes are picked up
+vim.api.nvim_create_autocmd({ "TermClose", "TermLeave", "BufLeave" }, {
+  group = vim.api.nvim_create_augroup("EssentialTermChecktime", { clear = true }),
+	callback = function()
+		if vim.o.buftype ~= "nofile" then
+			vim.cmd("silent! checktime")
+		end
+	end,
+})
+
 -- Handle shell exit (when close_on_exit = false, clean up closed buffers manually)
 vim.api.nvim_create_autocmd("TermClose", {
   group = vim.api.nvim_create_augroup("EssentialTermClose", { clear = true }),
