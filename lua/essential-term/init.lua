@@ -9,6 +9,20 @@ local ui = require("essential-term.ui")
 ---@param opts? {shell?:string, size?:integer, close_on_exit?:boolean, start_in_insert?:boolean, sidebar_width?:integer, display_mode?:"horizontal"|"vertical"|"float", border?:string, escape_key?:string|false, colors?:{bg?:string, fg?:string}}
 function M.setup(opts)
   config.setup(opts)
+
+  vim.api.nvim_create_autocmd("VimResized", {
+    group = vim.api.nvim_create_augroup("EssentialTermResize", { clear = true }),
+    callback = function()
+      vim.schedule(function()
+        terminal.resize()
+        local active = state.get_active()
+        if active and active.winnr and vim.api.nvim_win_is_valid(active.winnr) then
+          ui.reposition_tabline(active.winnr)
+        end
+        ui.refresh()
+      end)
+    end,
+  })
 end
 
 -- Returns true if any terminal window is currently visible

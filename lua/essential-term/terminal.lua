@@ -247,4 +247,36 @@ function M.destroy(id)
   end
 end
 
+---Resize all currently visible terminal windows to match the current editor
+---dimensions while preserving the configured size percentage.
+---No-op for sessions whose window is not currently open.
+function M.resize()
+  local mode = config.options.display_mode or "horizontal"
+  local pct  = (config.options.size or 70) / 100
+
+  for _, term in ipairs(state._terms) do
+    if term.winnr and vim.api.nvim_win_is_valid(term.winnr) then
+      if mode == "float" then
+        local cols   = vim.o.columns
+        local lines  = vim.o.lines
+        local width  = math.floor(cols  * pct)
+        local height = math.floor(lines * pct)
+        local row    = math.floor((lines - height) / 2)
+        local col    = math.floor((cols  - width)  / 2)
+        vim.api.nvim_win_set_config(term.winnr, {
+          relative = "editor",
+          width = width, height = height,
+          row = row, col = col,
+        })
+      elseif mode == "vertical" then
+        local width = math.floor(vim.o.columns * pct)
+        vim.api.nvim_win_set_width(term.winnr, width)
+      else -- horizontal
+        local height = math.floor(vim.o.lines * pct)
+        vim.api.nvim_win_set_height(term.winnr, height)
+      end
+    end
+  end
+end
+
 return M

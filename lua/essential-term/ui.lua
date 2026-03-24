@@ -255,6 +255,40 @@ function M.refresh_tabline()
   vim.bo[bufnr].modifiable = false
 end
 
+---Update the floating tabline's position and width to match `term_winnr`.
+---Call this after the terminal window has been resized or moved so the tabline
+---stays anchored to the top of the terminal.
+---No-op if the tabline is not currently visible.
+---@param term_winnr integer Window id of the active terminal window
+function M.reposition_tabline(term_winnr)
+  if not (M._tabline and vim.api.nvim_win_is_valid(M._tabline.winid)) then return end
+  if not vim.api.nvim_win_is_valid(term_winnr) then return end
+
+  local wincfg = vim.api.nvim_win_get_config(term_winnr)
+  local row, col, width, zindex
+  if wincfg.relative and wincfg.relative ~= "" then
+    row    = wincfg.row - 1
+    col    = wincfg.col
+    width  = wincfg.width + 2
+    zindex = (wincfg.zindex or 50) + 1
+  else
+    local pos = vim.api.nvim_win_get_position(term_winnr)
+    row    = pos[1]
+    col    = pos[2]
+    width  = vim.api.nvim_win_get_width(term_winnr)
+    zindex = 50
+  end
+
+  vim.api.nvim_win_set_config(M._tabline.winid, {
+    relative = "editor",
+    row      = row,
+    col      = col,
+    width    = width,
+    height   = 1,
+    zindex   = zindex,
+  })
+end
+
 ---Refresh whichever UI elements are currently visible (sidebar and/or tabline).
 function M.refresh()
   M.refresh_sidebar()

@@ -1,0 +1,20 @@
+# macOS
+.DS_Store
+
+# IDE / editor config
+.claude/
+.cursor/
+
+# Lua
+*.luac
+luac.out
+
+# LuaRocks
+*.rock
+*.rockspec.lock
+lua_modules/
+.luarocks/
+
+# Neovim plugin testing
+.tests/
+deps/
