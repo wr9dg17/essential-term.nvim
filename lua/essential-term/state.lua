@@ -91,6 +91,7 @@ function M.index_of(id)
   return nil
 end
 
+---Return true if essential-term is open otherwise return false
 function M.is_open()
   local curWin = M.get_active()
   if curWin == nil then
