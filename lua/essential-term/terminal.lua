@@ -22,8 +22,7 @@ local function open_window()
     local lines  = vim.o.lines
     local width  = math.floor(cols  * pct)
     local height = math.floor(lines * pct)
-    -- +1 reserves the row above the float's top border for the tabline
-    local row    = math.floor((lines - height) / 2) + 1
+    local row    = math.floor((lines - height) / 2)
     local col    = math.floor((cols  - width)  / 2)
     local tmp = vim.api.nvim_create_buf(false, true)
     local win_cfg = {
@@ -34,7 +33,7 @@ local function open_window()
       border = config.options.border or "rounded",
       zindex = 50,
     }
-    if vim.fn.has("nvim-0.9") == 1 and border ~= "none" then
+    if vim.fn.has("nvim-0.9") == 1 then
       win_cfg.title     = " essential-term "
       win_cfg.title_pos = "center"
     end
@@ -276,7 +275,7 @@ function M.resize()
         local lines  = vim.o.lines
         local width  = math.floor(cols  * pct)
         local height = math.floor(lines * pct)
-        local row    = math.floor((lines - height) / 2) + 1
+        local row    = math.floor((lines - height) / 2)
         local col    = math.floor((cols  - width)  / 2)
         vim.api.nvim_win_set_config(term.winnr, {
           relative = "editor",
